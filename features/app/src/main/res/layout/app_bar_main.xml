@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.AppBasePetshop.AppBarOverlay">
+        android:theme="@style/Theme.ListaDeRepositóriosGIT">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:navigationIcon="@drawable/back_button_black"
-            app:popupTheme="@style/Theme.AppBasePetshop">
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:popupTheme="@style/Theme.ListaDeRepositóriosGIT">
 
             <TextView
                 android:id="@+id/toolbarTitleView"

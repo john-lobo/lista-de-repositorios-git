@@ -3,7 +3,7 @@ package com.jlndev.githubservice.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Item(
+data class GitRepositoryResponse(
     @SerializedName("allow_forking")
     val allowForking: Boolean,
     @SerializedName("archive_url")

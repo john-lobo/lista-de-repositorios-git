@@ -7,7 +7,7 @@ import com.jlndev.githubservice.data.GithubRepositoryImpl
 import com.jlndev.githubservice.data.api.GithubService
 import org.koin.dsl.module
 
-val dataModuleGithubService = module {
+val githubServiceModule = module {
     single { NetworkProviders.providerRetrofit(GithubService::class.java, BuildConfig.BASE_URL) }
     single<GithubRepository> { GithubRepositoryImpl(get()) }
 }
