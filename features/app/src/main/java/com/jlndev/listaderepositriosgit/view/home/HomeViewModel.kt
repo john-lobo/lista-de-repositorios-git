@@ -1,6 +1,5 @@
 package com.jlndev.listaderepositriosgit.view.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jlndev.baseservice.ext.BaseSchedulerProvider
@@ -16,22 +15,51 @@ class HomeViewModel(
     private val repository: GithubRepository
 ) : BaseViewModel() {
 
-    private val _repositoryGitLive = MutableLiveData<ResponseState<GitHubSearchResponse>>()
-    val repositoryGitLive : LiveData<ResponseState<GitHubSearchResponse>>
-        get() = _repositoryGitLive
+    private var itemCount = 1
 
-    internal fun searchRepositories() {
-        repository.searchRepositories(1)
+    private val _repositoryFirstPageLive = MutableLiveData<ResponseState<GitHubSearchResponse>>()
+    val repositoryFirstPageLive : LiveData<ResponseState<GitHubSearchResponse>>
+        get() = _repositoryFirstPageLive
+
+    private val _repositoryMorePageLive = MutableLiveData<ResponseState<GitHubSearchResponse>>()
+    val repositoryMorePageLive : LiveData<ResponseState<GitHubSearchResponse>>
+        get() = _repositoryMorePageLive
+
+    init {
+        loadFirstPageItems()
+    }
+
+    internal fun loadFirstPageItems() {
+        repository.searchRepositories(itemCount)
             .processSingle(schedulerProvider)
-            .doOnSubscribe { _repositoryGitLive.value = ResponseState.Loading(true) }
+            .doOnSubscribe { _repositoryFirstPageLive.value = ResponseState.Loading(true) }
+            .doFinally { _repositoryFirstPageLive.value = ResponseState.Loading(false) }
             .doOnSuccess {
-                _repositoryGitLive.value = ResponseState.Loading(false)
-                _repositoryGitLive.value = ResponseState.Success(it)
+                _repositoryFirstPageLive.value = ResponseState.Success(it)
             }
             .doOnError {
-                _repositoryGitLive.value = ResponseState.Loading(false)
-                _repositoryGitLive.value = ResponseState.Error(it)
+                _repositoryFirstPageLive.value = ResponseState.Error(it)
             }
             .disposedBy(disposables)
+    }
+
+    fun loadMoreItems() {
+        incrementCount()
+        repository.searchRepositories(itemCount)
+            .processSingle(schedulerProvider)
+            .doOnSubscribe { _repositoryMorePageLive.value = ResponseState.Loading(true) }
+            .doFinally { _repositoryMorePageLive.value = ResponseState.Loading(false) }
+            .doOnSuccess {
+                _repositoryMorePageLive.value = ResponseState.Success(it)
+            }
+            .doOnError {
+                _repositoryMorePageLive.value = ResponseState.Error(it)
+            }
+            .disposedBy(disposables)
+    }
+
+    // Função para incrementar a contagem
+    fun incrementCount() {
+        itemCount++
     }
 }

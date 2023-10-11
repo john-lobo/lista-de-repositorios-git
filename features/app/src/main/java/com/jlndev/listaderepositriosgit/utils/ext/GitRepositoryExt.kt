@@ -5,7 +5,7 @@ import com.jlndev.listaderepositriosgit.view.home.adapter.model.GitRepositoryIte
 
 fun GitRepositoryResponse.toGitRepositoryItem() : GitRepositoryItem {
     return GitRepositoryItem(
-        repositoryId = this.id.toString(),
+        id = this.id.toString(),
         repositoryName =  this.name,
         stargazersCount = stargazersCount,
         forksCount = forksCount,

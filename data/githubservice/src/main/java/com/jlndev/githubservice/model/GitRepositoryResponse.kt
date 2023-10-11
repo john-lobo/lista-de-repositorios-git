@@ -2,6 +2,7 @@ package com.jlndev.githubservice.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class GitRepositoryResponse(
     @SerializedName("allow_forking")
@@ -164,4 +165,4 @@ data class GitRepositoryResponse(
     val watchersCount: Int,
     @SerializedName("web_commit_signoff_required")
     val webCommitSignoffRequired: Boolean
-)
+) : Serializable

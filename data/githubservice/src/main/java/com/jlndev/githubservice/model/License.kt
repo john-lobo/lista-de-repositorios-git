@@ -2,6 +2,7 @@ package com.jlndev.githubservice.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class License(
     @SerializedName("key")
@@ -14,4 +15,4 @@ data class License(
     val spdxId: String,
     @SerializedName("url")
     val url: String
-)
+) : Serializable

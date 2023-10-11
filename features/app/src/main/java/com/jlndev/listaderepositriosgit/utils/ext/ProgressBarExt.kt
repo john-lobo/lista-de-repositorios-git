@@ -4,9 +4,9 @@ import android.widget.ProgressBar
 
 fun ProgressBar.showLoading(isLoading: Boolean) {
     if (isLoading) {
-        this.visibility = android.view.View.VISIBLE
+        visible(true)
     } else {
-        this.visibility = android.view.View.GONE
+        gone(true)
     }
 }
 

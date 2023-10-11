@@ -9,12 +9,15 @@ abstract class BaseAdapter<MODEL : BaseAdapter.BaseDiffItemView, VH : BaseAdapte
 ) : RecyclerView.Adapter<VH>() {
 
     protected lateinit var recyclerView: RecyclerView
-    private var items: List<MODEL> = emptyList()
+    protected var items: List<MODEL> = emptyList()
 
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.bind(items[position])
+        holder.itemView.setOnClickListener {
+            listener.onAdapterItemClicked(position, items[position], holder.itemView)
+        }
     }
 
     open fun submitList(newItems: List<MODEL>) {
@@ -42,6 +45,23 @@ abstract class BaseAdapter<MODEL : BaseAdapter.BaseDiffItemView, VH : BaseAdapte
         val newItems = items.toMutableList()
         newItems.add(index, item)
         submitList(newItems)
+    }
+
+    fun addItem(item: MODEL) {
+        val newItems = items.toMutableList()
+        newItems.add(item)
+        submitList(newItems)
+        notifyItemInserted(newItems.size - 1)
+    }
+
+    fun removeItem(item: MODEL) {
+        val index = items.indexOf(item)
+        if (index >= 0) {
+            val newItems = items.toMutableList()
+            newItems.remove(item)
+            submitList(newItems)
+            notifyItemRemoved(index)
+        }
     }
 
     fun replace(item: MODEL, position: Int) {
