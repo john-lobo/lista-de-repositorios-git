@@ -16,7 +16,6 @@
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/dimen_60dp"
         app:cardElevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -46,15 +45,15 @@
         android:id="@+id/itemOwnerNameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_08dp"
         android:background="@color/white"
-        android:textColor="@color/black"
         android:ellipsize="end"
         android:textAlignment="center"
+        android:layout_marginStart="@dimen/dimen_08dp"
         android:textAllCaps="true"
-        app:layout_constraintEnd_toEndOf="@+id/itemCardImageView"
-        app:layout_constraintStart_toStartOf="@+id/itemCardImageView"
-        app:layout_constraintTop_toBottomOf="@+id/itemCardImageView"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/itemRepositoryNameView"
+        app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
+        app:layout_constraintTop_toTopOf="@+id/itemCardImageView"
         tools:text="John Lobo" />
 
     <TextView
@@ -64,10 +63,10 @@
         android:layout_marginTop="@dimen/dimen_04dp"
         android:background="@color/white"
         android:textAllCaps="true"
+        android:layout_marginStart="@dimen/dimen_08dp"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/itemOwnerNameView"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="@+id/itemOwnerNameView"
+        app:layout_constraintBottom_toTopOf="@+id/itemTitleStarView"
+        app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
         app:layout_constraintTop_toBottomOf="@+id/itemOwnerNameView"
         tools:text="Respositorio" />
 
@@ -77,11 +76,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_04dp"
         android:background="@color/white"
+        android:layout_marginStart="@dimen/dimen_08dp"
         android:text="@string/starts"
-        android:textColor="@color/black"
         android:textAllCaps="true"
-        app:layout_constraintEnd_toEndOf="@+id/itemRepositoryNameView"
-        app:layout_constraintStart_toStartOf="@+id/itemRepositoryNameView"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/itemTitleForkView"
+        app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
         app:layout_constraintTop_toBottomOf="@+id/itemRepositoryNameView" />
 
 
@@ -90,13 +90,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_04dp"
+        android:layout_marginStart="@dimen/dimen_08dp"
         android:background="@color/white"
         android:textAllCaps="true"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/itemTitleStarView"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintBottom_toBottomOf="@+id/itemCardImageView"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@+id/itemTitleStarView"
+        app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
         app:layout_constraintTop_toBottomOf="@+id/itemTitleStarView"
         tools:text="@string/forks" />
 

@@ -22,7 +22,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     private  var isLoading = false
 
     override fun onInitData() {
-        // nothing
+        viewModel.loadFirstPageItems()
     }
 
     override fun onGetToolbar(): ToolbarConfig = ToolbarConfig("Home", false)
@@ -32,9 +32,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     override fun onInitViewModel() {
         viewModel.repositoryFirstPageLive.observe(viewLifecycleOwner) {
             when(it) {
-                is ResponseState.Loading -> {
-                    binding.loadingView.showLoading(it.isLoading)
-                }
                 is ResponseState.Success -> {
                     binding.recyclerGitRepositoriesView.visible()
                     val gitRepositoryItems = it.data.items.map { it.toGitRepositoryItem() }
@@ -49,9 +46,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
         viewModel.repositoryMorePageLive.observe(viewLifecycleOwner) {
             when(it) {
-                is ResponseState.Loading -> {
-                    isLoading = it.isLoading
-                }
                 is ResponseState.Success -> {
                     val gitRepositoryItems = it.data.items.map { it.toGitRepositoryItem() }
                     gitRepositoriesAdapter.addMoreItems(gitRepositoryItems)
@@ -61,6 +55,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                     binding.recyclerGitRepositoriesView.gone()
                 }
             }
+        }
+
+        viewModel.repositoryFirstPageLoading.observe(viewLifecycleOwner) {
+            binding.loadingView.showLoading(it)
+        }
+
+        viewModel.repositoryMorePageLoading.observe(viewLifecycleOwner) {
+            isLoading = it
         }
     }
 

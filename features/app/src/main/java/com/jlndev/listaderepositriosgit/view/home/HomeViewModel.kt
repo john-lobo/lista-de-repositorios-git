@@ -25,15 +25,20 @@ class HomeViewModel(
     val repositoryMorePageLive : LiveData<ResponseState<GitHubSearchResponse>>
         get() = _repositoryMorePageLive
 
-    init {
-        loadFirstPageItems()
-    }
+    private val _repositoryFirstPageLoading = MutableLiveData<Boolean>()
+    val repositoryFirstPageLoading: LiveData<Boolean>
+        get() = _repositoryFirstPageLoading
+
+    private val _repositoryMorePageLoading = MutableLiveData<Boolean>()
+    val repositoryMorePageLoading: LiveData<Boolean>
+        get() = _repositoryMorePageLoading
 
     internal fun loadFirstPageItems() {
+        _repositoryFirstPageLoading.value = true
+
         repository.searchRepositories(itemCount)
             .processSingle(schedulerProvider)
-            .doOnSubscribe { _repositoryFirstPageLive.value = ResponseState.Loading(true) }
-            .doFinally { _repositoryFirstPageLive.value = ResponseState.Loading(false) }
+            .doFinally { _repositoryFirstPageLoading.value = false }
             .doOnSuccess {
                 _repositoryFirstPageLive.value = ResponseState.Success(it)
             }
@@ -45,10 +50,11 @@ class HomeViewModel(
 
     fun loadMoreItems() {
         incrementCount()
+        _repositoryMorePageLoading.value = true
+
         repository.searchRepositories(itemCount)
             .processSingle(schedulerProvider)
-            .doOnSubscribe { _repositoryMorePageLive.value = ResponseState.Loading(true) }
-            .doFinally { _repositoryMorePageLive.value = ResponseState.Loading(false) }
+            .doFinally { _repositoryMorePageLoading.value = false }
             .doOnSuccess {
                 _repositoryMorePageLive.value = ResponseState.Success(it)
             }
@@ -58,7 +64,6 @@ class HomeViewModel(
             .disposedBy(disposables)
     }
 
-    // Função para incrementar a contagem
     fun incrementCount() {
         itemCount++
     }
