@@ -8,18 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.jlndev.listaderepositriosgit.bases.viewModel.BaseViewModel
 
-abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>: Fragment() {
+abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>: Fragment(), BaseFragmentInterface<VB, VM> {
 
-    private var _binding: VB? = null
-    protected val binding: VB
+    override var _binding: VB? = null
+    override val binding: VB
         get() = _binding!!
-
-    abstract val viewModel: VM
-
-    abstract fun onInitData()
-    abstract fun onGetViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
-    abstract fun onInitViews()
-    abstract fun onInitViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

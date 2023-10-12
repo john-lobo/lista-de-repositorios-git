@@ -1,6 +1,6 @@
 package com.jlndev.githubservice.data.api
 
-import com.jlndev.githubservice.model.GithubResponse
+import com.jlndev.githubservice.data.api.model.GithubResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query

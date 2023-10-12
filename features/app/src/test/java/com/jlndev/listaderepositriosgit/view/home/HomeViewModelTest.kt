@@ -3,7 +3,7 @@ package com.jlndev.listaderepositriosgit.view.home
 import androidx.lifecycle.Observer
 import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.githubservice.data.service.GithubRepository
-import com.jlndev.githubservice.model.GithubResponse
+import com.jlndev.githubservice.data.api.model.GithubResponse
 import com.jlndev.listaderepositriosgit.BaseViewModelTest
 import io.mockk.every
 import io.mockk.mockk

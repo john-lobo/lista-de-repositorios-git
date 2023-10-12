@@ -1,6 +1,6 @@
 package com.jlndev.githubservice.data.service
 
-import com.jlndev.githubservice.model.GithubResponse
+import com.jlndev.githubservice.data.api.model.GithubResponse
 import io.reactivex.Single
 
 interface GithubRepository {

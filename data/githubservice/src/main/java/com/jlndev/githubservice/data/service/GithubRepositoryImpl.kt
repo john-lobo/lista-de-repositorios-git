@@ -1,12 +1,12 @@
 package com.jlndev.githubservice.data.service
 
 import com.jlndev.githubservice.data.api.GithubService
+import com.jlndev.githubservice.data.api.model.GithubResponse
 import com.jlndev.githubservice.data.db.dao.GithubPageDao
 import com.jlndev.githubservice.data.db.dao.GithubRepositoryDao
 import com.jlndev.githubservice.data.db.model.GithubPageEntity
 import com.jlndev.githubservice.ext.toGithubRepositoryEntity
 import com.jlndev.githubservice.ext.toGithubResponse
-import com.jlndev.githubservice.model.GithubResponse
 import io.reactivex.Single
 
 class GithubRepositoryImpl(
@@ -42,9 +42,10 @@ class GithubRepositoryImpl(
 
     private fun searchAndUpdateDatabase(page: Int): Single<GithubResponse> {
         return service.searchRepositories(page)
-            .doOnSuccess { response ->
+            .flatMap { response ->
                 repositoryDao.insertRepositories(response.items.map { it.toGithubRepositoryEntity() })
-                pageDao.insertOrUpdatePage(GithubPageEntity(page = page)).subscribe()
+                    .andThen(pageDao.insertOrUpdatePage(GithubPageEntity(page = page)))
+                    .toSingleDefault(response)
             }
     }
 }

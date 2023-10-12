@@ -1,7 +1,23 @@
 <resources>
     <string name="app_name">Lista de repositórios GIT</string>
     <string name="home">Home</string>
-    <string name="starts">Estrelas:</string>
-    <string name="forks">Forks:</string>
     <string name="list_repositories">Lista de repositorios</string>
+
+    <string name="repository_name_value">Repositório: %1$s</string>
+    <string name="owner_name_value">Autor: %1$s</string>
+    <string name="stars_value">Estrelas: %1$d</string>
+    <string name="forks_value">Forks: %1$d</string>
+    <string name="description_value">Descrição: %1$s</string>
+    <string name="language_value">Linguagem: %1$s</string>
+    <string name="visibility_value">Visibilidade: %1$s</string>
+
+    <string name="repository">Repositório:</string>
+    <string name="owner_name">Autor:</string>
+    <string name="stars">Estrelas:</string>
+    <string name="forks">Forks:</string>
+    <string name="description">Descrição:</string>
+    <string name="language">Linguagem:</string>
+    <string name="visibility">Visibilidade:</string>
+    <string name="try_again">Tentar Novamente</string>
+    <string name="generic_error">Ops! \nOcorreu um erro.</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.jlndev.githubservice.model
+package com.jlndev.githubservice.data.api.model
 
 import java.io.Serializable
 

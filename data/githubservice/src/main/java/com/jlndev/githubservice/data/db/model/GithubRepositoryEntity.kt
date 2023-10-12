@@ -11,5 +11,8 @@ data class GithubRepositoryEntity(
     val stargazersCount: Int,
     val forksCount: Int,
     val avatarUrl: String,
-    val login: String
+    val login: String,
+    val description: String,
+    val visibility: String,
+    val language: String
 )

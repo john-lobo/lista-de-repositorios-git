@@ -1,4 +1,4 @@
-package com.jlndev.githubservice.model
+package com.jlndev.githubservice.data.api.model
 
 
 import com.google.gson.annotations.SerializedName
@@ -8,10 +8,13 @@ data class GithubRepositoryResponse(
     @SerializedName("id")
     val id: Int,
     @SerializedName("name")
-    val repositoryName: String,
+    val repositoryName: String?,
     @SerializedName("stargazers_count")
-    val stargazersCount: Int,
+    val stargazersCount: Int?,
     @SerializedName("forks_count")
-    val forksCount: Int,
-    val owner: OwnerResponse,
+    val forksCount: Int?,
+    val owner: OwnerResponse?,
+    val description: String?,
+    val visibility: String?,
+    val language: String?
 ) : Serializable

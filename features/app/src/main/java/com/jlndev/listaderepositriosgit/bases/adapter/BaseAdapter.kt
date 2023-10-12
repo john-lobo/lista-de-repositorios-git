@@ -7,20 +7,20 @@ abstract class BaseAdapter<MODEL : BaseDiffItemView, VH : BaseViewHolder<MODEL>,
     open var listener: LISTENER
 ) : RecyclerView.Adapter<VH>() {
 
-    protected val controller = BaseAdapterController<MODEL>()
+    protected var items: List<MODEL> = emptyList()
 
-    override fun getItemCount() = controller.getItems().size
+    override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        holder.bind(controller.getItems()[position])
+        holder.bind(items[position])
         holder.itemView.setOnClickListener {
-            listener.onAdapterItemClicked(position, controller.getItems()[position], holder.itemView)
+            listener.onAdapterItemClicked(position, items[position], holder.itemView)
         }
     }
 
     open fun submitList(newItems: List<MODEL>) {
-        val diffResult = DiffUtil.calculateDiff(BaseDiffUtilCallback(controller.getItems(), newItems))
-        controller.setItems(newItems)
+        val diffResult = DiffUtil.calculateDiff(BaseDiffUtilCallback(items, newItems))
+        items = newItems
         diffResult.dispatchUpdatesTo(this)
     }
 }

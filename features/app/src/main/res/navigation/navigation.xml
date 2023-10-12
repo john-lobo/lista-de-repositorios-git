@@ -10,5 +10,13 @@
         android:name="com.jlndev.listaderepositriosgit.view.home.HomeFragment"
         android:label="@string/list_repositories"
         tools:layout="@layout/fragment_home">
+
+        <action android:id="@+id/action_home_to_details"
+            app:destination="@id/nav_details" />
     </fragment>
+
+    <dialog
+        android:id="@+id/nav_details"
+        android:name="com.jlndev.listaderepositriosgit.view.details.DetailsFragment"
+        tools:layout="@layout/fragment_details" />
 </navigation>

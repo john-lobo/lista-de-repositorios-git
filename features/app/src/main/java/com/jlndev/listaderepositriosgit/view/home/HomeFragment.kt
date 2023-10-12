@@ -3,8 +3,10 @@ package com.jlndev.listaderepositriosgit.view.home
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.listaderepositriosgit.R
 import com.jlndev.listaderepositriosgit.bases.fragment.BaseFragment
 import com.jlndev.listaderepositriosgit.databinding.FragmentHomeBinding
 import com.jlndev.listaderepositriosgit.utils.ext.gone
@@ -16,6 +18,10 @@ import com.jlndev.listaderepositriosgit.view.home.adapter.model.GitRepositoryIte
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
+
+    companion object {
+        const val KEY_GIT_REPOSITORY_ITEM = "KEY_GIT_REPOSITORY_ITEM"
+    }
 
     override val viewModel : HomeViewModel by viewModel()
     private lateinit var gitRepositoriesAdapter: GitRepositoriesAdapter
@@ -30,7 +36,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     override fun onInitViews() {
         gitRepositoriesAdapter = GitRepositoriesAdapter(object : GitRepositoriesAdapter.GitRepositoriesAdapterListener {
             override fun onAdapterItemClicked(position: Int, item: GitRepositoryItem, view: View?) {
-                Toast.makeText(requireContext(), item.repositoryName, Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_home_to_details, bundleOf(KEY_GIT_REPOSITORY_ITEM to item))
             }
 
             override fun loadMoreItems() {
@@ -41,6 +47,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }, requireContext())
 
         binding.recyclerGitRepositoriesView.adapter = gitRepositoriesAdapter
+
+        binding.errorView.retryButton.setOnClickListener {
+            onInitData()
+        }
     }
 
     override fun onInitViewModel() {
@@ -49,11 +59,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 is ResponseState.Success -> {
                     binding.recyclerGitRepositoriesView.visible()
                     val gitRepositoryItems = it.data.items.map { it.toGitRepositoryItem() }
+                        .sortedByDescending { it.stargazersCount }
                     gitRepositoriesAdapter.submitList(gitRepositoryItems)
                 }
 
                 is ResponseState.Error -> {
                     binding.recyclerGitRepositoriesView.gone()
+                    binding.errorView.root.visible()
                 }
             }
         }
@@ -62,6 +74,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             when(it) {
                 is ResponseState.Success -> {
                     val gitRepositoryItems = it.data.items.map { it.toGitRepositoryItem() }
+                        .sortedByDescending { it.stargazersCount }
                     gitRepositoriesAdapter.addMoreItems(gitRepositoryItems)
                 }
 
@@ -72,6 +85,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         }
 
         viewModel.repositoryFirstPageLoading.observe(viewLifecycleOwner) {
+            if(it) {
+                binding.recyclerGitRepositoriesView.gone()
+                binding.errorView.root.gone()
+            }
             binding.loadingView.showLoading(it)
         }
 

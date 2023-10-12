@@ -6,8 +6,8 @@ import com.jlndev.baseservice.ext.BaseSchedulerProvider
 import com.jlndev.baseservice.ext.disposedBy
 import com.jlndev.baseservice.ext.processSingle
 import com.jlndev.baseservice.state.ResponseState
+import com.jlndev.githubservice.data.api.model.GithubResponse
 import com.jlndev.githubservice.data.service.GithubRepository
-import com.jlndev.githubservice.model.GithubResponse
 import com.jlndev.listaderepositriosgit.bases.viewModel.BaseViewModel
 
 class HomeViewModel(

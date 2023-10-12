@@ -53,9 +53,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_04dp"
+        android:layout_marginStart="@dimen/dimen_08dp"
         android:background="@color/white"
         android:textAllCaps="true"
-        android:layout_marginStart="@dimen/dimen_08dp"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/itemTitleStarView"
         app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
@@ -69,7 +69,7 @@
         android:layout_marginTop="@dimen/dimen_04dp"
         android:background="@color/white"
         android:layout_marginStart="@dimen/dimen_08dp"
-        android:text="@string/starts"
+        tools:text="ESTRELAS"
         android:textAllCaps="true"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/itemTitleForkView"
@@ -90,7 +90,6 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
         app:layout_constraintTop_toBottomOf="@+id/itemTitleStarView"
-        tools:text="@string/forks" />
-
+        tools:text="FORKS" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
