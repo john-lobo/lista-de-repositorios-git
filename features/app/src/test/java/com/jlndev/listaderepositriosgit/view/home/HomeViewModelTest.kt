@@ -2,8 +2,8 @@ package com.jlndev.listaderepositriosgit.view.home
 
 import androidx.lifecycle.Observer
 import com.jlndev.baseservice.state.ResponseState
-import com.jlndev.githubservice.data.service.GithubRepository
 import com.jlndev.githubservice.data.api.model.GithubResponse
+import com.jlndev.githubservice.data.service.GithubRepository
 import com.jlndev.listaderepositriosgit.BaseViewModelTest
 import io.mockk.every
 import io.mockk.mockk
@@ -86,10 +86,40 @@ class HomeViewModelTest : BaseViewModelTest() {
         verify { onRepositoryFirstPageObserver.onChanged(ResponseState.Error(error)) }
     }
 
+    @Test
+    fun testClearAndSearchFirstRepositoriesSuccess() {
+        // Arrange
+        every { repository.clearAndSearchFirstRepositories() } returns Single.just(githubResponse)
+
+        // Act
+        viewModel.clearAndSearchFirstRepositories()
+        testScheduler.test().advanceTimeBy(1, TimeUnit.SECONDS)
+
+        // Assert
+        verify { repository.clearAndSearchFirstRepositories() }
+        verify { onRepositoryFirstPageObserver.onChanged(ResponseState.Success(githubResponse)) }
+    }
+
+    @Test
+    fun estClearAndSearchFirstRepositoriesError() {
+        // Arrange
+        val error = Throwable("Erro na busca de repositórios")
+        every { repository.clearAndSearchFirstRepositories() } returns Single.error(error)
+
+        // Act
+        viewModel.clearAndSearchFirstRepositories()
+        testScheduler.test().advanceTimeBy(1, TimeUnit.SECONDS)
+
+        // Assert
+        verify { repository.clearAndSearchFirstRepositories() }
+        verify { onRepositoryFirstPageObserver.onChanged(ResponseState.Error(error)) }
+    }
+
     private fun instantiateViewModel(): HomeViewModel {
         val viewModel = HomeViewModel(testScheduler, repository)
         observeLiveData(viewModel.repositoryFirstPageLive, onRepositoryFirstPageObserver)
         observeLiveData(viewModel.repositoryMorePageLive, onRepositoryFirstPageObserver)
+        observeLiveData(viewModel.updateRepositoryLive, onRepositoryFirstPageObserver)
         return viewModel
     }
 
