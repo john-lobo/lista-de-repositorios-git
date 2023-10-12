@@ -9,15 +9,14 @@ import com.jlndev.listaderepositriosgit.utils.ext.getTypedParcelable
 import com.jlndev.listaderepositriosgit.utils.ext.loadImage
 import com.jlndev.listaderepositriosgit.utils.ext.setBoldSubstring
 import com.jlndev.listaderepositriosgit.view.home.HomeFragment.Companion.KEY_GIT_REPOSITORY_ITEM
-import com.jlndev.listaderepositriosgit.view.home.HomeViewModel
 import com.jlndev.listaderepositriosgit.view.home.adapter.model.GitRepositoryItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailsFragment: BaseBottomSheetFragment<FragmentDetailsBinding, HomeViewModel>() {
+class DetailsFragment: BaseBottomSheetFragment<FragmentDetailsBinding, DetailsViewModel>() {
 
     private lateinit var item: GitRepositoryItem
 
-    override val viewModel: HomeViewModel by viewModel()
+    override val viewModel: DetailsViewModel by viewModel()
 
     override fun onInitData() {
         item = arguments?.getTypedParcelable(KEY_GIT_REPOSITORY_ITEM, GitRepositoryItem::class.java) ?: GitRepositoryItem.EMPTY
@@ -39,5 +38,6 @@ class DetailsFragment: BaseBottomSheetFragment<FragmentDetailsBinding, HomeViewM
     }
 
     override fun onInitViewModel() {
+        // nothing
     }
 }

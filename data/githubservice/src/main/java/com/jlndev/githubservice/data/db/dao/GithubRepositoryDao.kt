@@ -21,5 +21,5 @@ interface GithubRepositoryDao {
     fun getAllRepositories(): Single<List<GithubRepositoryEntity>>
 
     @Query("DELETE FROM githubRepository")
-    fun deleteAllRepositories()
+    fun deleteAllRepositories() : Completable
 }

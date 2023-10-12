@@ -40,6 +40,12 @@ class GithubRepositoryImpl(
             }
     }
 
+    override fun clearAndSearchFirstRepositories(): Single<GithubResponse> {
+        return repositoryDao.deleteAllRepositories()
+            .andThen(pageDao.insertOrUpdatePage(GithubPageEntity(page =  ONE_VALUE)))
+            .andThen(searchAndUpdateDatabase(ONE_VALUE))
+    }
+
     private fun searchAndUpdateDatabase(page: Int): Single<GithubResponse> {
         return service.searchRepositories(page)
             .flatMap { response ->

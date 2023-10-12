@@ -20,4 +20,8 @@
     <string name="visibility">Visibilidade:</string>
     <string name="try_again">Tentar Novamente</string>
     <string name="generic_error">Ops! \nOcorreu um erro.</string>
+    <string name="attention">Atenção!</string>
+    <string name="delete_and_update_list">Deseja excluir e atualizar a Lista de repositórios</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
 </resources>

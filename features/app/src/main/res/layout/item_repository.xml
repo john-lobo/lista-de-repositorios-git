@@ -76,7 +76,6 @@
         app:layout_constraintStart_toEndOf="@+id/itemCardImageView"
         app:layout_constraintTop_toBottomOf="@+id/itemRepositoryNameView" />
 
-
     <TextView
         android:id="@+id/itemTitleForkView"
         android:layout_width="wrap_content"

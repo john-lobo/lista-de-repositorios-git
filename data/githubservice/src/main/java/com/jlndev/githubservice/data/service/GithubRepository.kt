@@ -6,4 +6,5 @@ import io.reactivex.Single
 interface GithubRepository {
     fun searchFirstRepositories(): Single<GithubResponse>
     fun searchMoreRepositories(): Single<GithubResponse>
+    fun clearAndSearchFirstRepositories(): Single<GithubResponse>
 }

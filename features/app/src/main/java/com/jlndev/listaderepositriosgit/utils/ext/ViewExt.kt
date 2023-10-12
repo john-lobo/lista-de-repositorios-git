@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.view.View
+import com.google.android.material.snackbar.Snackbar
 
 fun View.visible(animate: Boolean = false) {
     if(animate) {
@@ -31,4 +32,20 @@ fun View.gone(animate: Boolean = false) {
     } else {
         visibility = View.GONE
     }
+}
+
+fun View.showSnackbar(
+    message: String,
+    actionText: String? = null,
+    action: (() -> Unit)? = null,
+    view: View? = null
+) {
+    val snackbar = Snackbar.make(this, message, Snackbar.LENGTH_SHORT)
+    if (actionText != null && action != null) {
+        snackbar.setAction(actionText) {
+            action()
+        }
+    }
+    snackbar.setAnchorView(view)
+    snackbar.show()
 }

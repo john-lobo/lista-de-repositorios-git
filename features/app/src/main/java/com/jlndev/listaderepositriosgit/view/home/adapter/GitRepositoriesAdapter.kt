@@ -21,6 +21,11 @@ class GitRepositoriesAdapter(
     private val context: Context
 ) : BaseAdapterController<GitRepositoryItem, BaseViewHolder<GitRepositoryItem>, BaseAdapterListener<GitRepositoryItem>>(repositoriesAdapterListener) {
 
+    companion object {
+        private const val VIEW_TYPE_REPOSITORY = 0
+        private const val VIEW_TYPE_LOADING = 1
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<GitRepositoryItem> {
         return when (viewType) {
             VIEW_TYPE_LOADING -> {
@@ -85,10 +90,5 @@ class GitRepositoriesAdapter(
     interface GitRepositoriesAdapterListener : BaseAdapterListener<GitRepositoryItem> {
         fun loadMoreItems()
         fun isLoading(): Boolean
-    }
-
-    companion object {
-        private const val VIEW_TYPE_REPOSITORY = 0
-        private const val VIEW_TYPE_LOADING = 1
     }
 }

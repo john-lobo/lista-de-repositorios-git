@@ -99,7 +99,6 @@
             app:layout_constraintTop_toBottomOf="@+id/itemRepositoryNameView"
             tools:text="ESTRELAS" />
 
-
         <TextView
             android:id="@+id/itemTitleForkView"
             android:layout_width="@dimen/match_constraints"
@@ -116,7 +115,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/itemTitleStarView"
             tools:text="FORKS" />
-
 
         <TextView
             android:id="@+id/itemLanguageView"
@@ -150,7 +148,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/itemLanguageView"
             tools:text="Visibilidade" />
-
 
         <TextView
             android:id="@+id/itemTitleDescriptionView"

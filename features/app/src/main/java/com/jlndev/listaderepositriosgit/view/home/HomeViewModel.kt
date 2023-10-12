@@ -23,6 +23,10 @@ class HomeViewModel(
     val repositoryMorePageLive : LiveData<ResponseState<GithubResponse>>
         get() = _repositoryMorePageLive
 
+    private val _updateRepositoryLive = MutableLiveData<ResponseState<GithubResponse>>()
+    val updateRepositoryLive : LiveData<ResponseState<GithubResponse>>
+        get() = _updateRepositoryLive
+
     private val _repositoryFirstPageLoading = MutableLiveData<Boolean>()
     val repositoryFirstPageLoading: LiveData<Boolean>
         get() = _repositoryFirstPageLoading
@@ -30,6 +34,11 @@ class HomeViewModel(
     private val _repositoryMorePageLoading = MutableLiveData<Boolean>()
     val repositoryMorePageLoading: LiveData<Boolean>
         get() = _repositoryMorePageLoading
+
+    private val _updateRepositoryLoadingLive = MutableLiveData<Boolean>()
+    val updateRepositoryLoadingLive: LiveData<Boolean>
+        get() = _updateRepositoryLoadingLive
+
 
     internal fun loadFirstPageItems() {
         _repositoryFirstPageLoading.value = true
@@ -57,6 +66,21 @@ class HomeViewModel(
             }
             .doOnError {
                 _repositoryMorePageLive.value = ResponseState.Error(it)
+            }
+            .disposedBy(disposables)
+    }
+
+    fun clearAndSearchFirstRepositories() {
+        _updateRepositoryLoadingLive.value = true
+
+        repository.clearAndSearchFirstRepositories()
+            .processSingle(schedulerProvider)
+            .doFinally { _updateRepositoryLoadingLive.value = false }
+            .doOnSuccess {
+                _updateRepositoryLive.value = ResponseState.Success(it)
+            }
+            .doOnError {
+                _updateRepositoryLive.value = ResponseState.Error(it)
             }
             .disposedBy(disposables)
     }

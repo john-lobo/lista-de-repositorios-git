@@ -1,5 +1,6 @@
 package com.jlndev.listaderepositriosgit.view.home
 
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +52,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         binding.errorView.retryButton.setOnClickListener {
             onInitData()
         }
+
+        binding.swipeRefreshView.setOnRefreshListener {
+            binding.swipeRefreshView.isRefreshing = false
+            clearAndUpdateAlertView()
+        }
     }
 
     override fun onInitViewModel() {
@@ -64,8 +70,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 }
 
                 is ResponseState.Error -> {
-                    binding.recyclerGitRepositoriesView.gone()
-                    binding.errorView.root.visible()
+                    showErrorView()
                 }
             }
         }
@@ -84,6 +89,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             }
         }
 
+        viewModel.updateRepositoryLive.observe(viewLifecycleOwner) {
+            when(it) {
+                is ResponseState.Success -> {
+                    gitRepositoriesAdapter.clear()
+                    val gitRepositoryItems = it.data.items.map { it.toGitRepositoryItem() }
+                        .sortedByDescending { it.stargazersCount }
+                    gitRepositoriesAdapter.submitList(gitRepositoryItems)
+                    binding.recyclerGitRepositoriesView.visible()
+                }
+
+                is ResponseState.Error -> {
+                    showErrorView()
+                }
+            }
+        }
+
         viewModel.repositoryFirstPageLoading.observe(viewLifecycleOwner) {
             if(it) {
                 binding.recyclerGitRepositoriesView.gone()
@@ -95,5 +116,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         viewModel.repositoryMorePageLoading.observe(viewLifecycleOwner) {
             isLoading = it
         }
+
+        viewModel.updateRepositoryLoadingLive.observe(viewLifecycleOwner) {
+            binding.swipeRefreshView.isRefreshing = it
+        }
+    }
+
+    private fun clearAndUpdateAlertView() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.attention))
+            .setMessage(getString(R.string.delete_and_update_list))
+            .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                viewModel.clearAndSearchFirstRepositories()
+            }
+            .setNegativeButton(getString(R.string.no)) { dismiss, _ ->
+                dismiss.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    private fun showErrorView() {
+        binding.recyclerGitRepositoriesView.gone()
+        binding.errorView.root.visible()
     }
 }
