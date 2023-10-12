@@ -14,5 +14,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Lista de repositórios GIT"
-include(":app")
- 
+include(":features:app")
+include(":data:baseservice")
+include(":data:githubservice")
