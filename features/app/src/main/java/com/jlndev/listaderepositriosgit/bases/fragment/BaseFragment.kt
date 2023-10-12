@@ -1,15 +1,12 @@
-package com.jlndev.listaderepositriosgit.bases
+package com.jlndev.listaderepositriosgit.bases.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.jlndev.listaderepositriosgit.MainActivity
-import com.jlndev.listaderepositriosgit.R
+import com.jlndev.listaderepositriosgit.bases.viewModel.BaseViewModel
 
 abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>: Fragment() {
 
@@ -19,9 +16,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>: Fragment() {
 
     abstract val viewModel: VM
 
-    lateinit var rootView: View
-
-    abstract fun onGetToolbar(): ToolbarConfig
     abstract fun onInitData()
     abstract fun onGetViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
     abstract fun onInitViews()
@@ -38,7 +32,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = onGetViewBinding(inflater, container)
-        rootView = binding.root
         return binding.root
     }
 
@@ -48,22 +41,8 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>: Fragment() {
         onInitViewModel()
     }
 
-    override fun onStart() {
-        super.onStart()
-        val toolbarConfig = onGetToolbar()
-        (requireActivity() as MainActivity).apply {
-            findViewById<CoordinatorLayout>(R.id.appBarMainView).findViewById<TextView>(R.id.toolbarTitleView).text = toolbarConfig.title
-            supportActionBar?.setDisplayHomeAsUpEnabled(toolbarConfig.showBackButton)
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-    data class ToolbarConfig(
-        val title: String = "",
-        val showBackButton: Boolean
-    )
 }

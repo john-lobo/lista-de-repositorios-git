@@ -1,4 +1,4 @@
-package com.jlndev.listaderepositriosgit.bases
+package com.jlndev.listaderepositriosgit.bases.viewModel
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable

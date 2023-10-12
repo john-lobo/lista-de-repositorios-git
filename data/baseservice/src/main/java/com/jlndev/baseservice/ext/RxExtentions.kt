@@ -1,10 +1,8 @@
 package com.jlndev.baseservice.ext
 
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
-
 
 fun <T> Single<T>.disposedBy(compositeDisposable: CompositeDisposable) {
     compositeDisposable.add(this.subscribe({
@@ -20,12 +18,6 @@ fun Completable.disposedBy(compositeDisposable: CompositeDisposable) {
     }, {
         // EMPTY
     }))
-}
-
-fun <T> Observable<T>.processObservable(scheduler: BaseSchedulerProvider): Observable<T> {
-    return this
-        .subscribeOn(scheduler.io())
-        .observeOn(scheduler.ui())
 }
 
 fun <T> Single<T>.processSingle(scheduler: BaseSchedulerProvider): Single<T> {

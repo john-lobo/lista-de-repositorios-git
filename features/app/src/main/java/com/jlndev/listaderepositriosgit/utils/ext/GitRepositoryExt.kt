@@ -1,9 +1,9 @@
 package com.jlndev.listaderepositriosgit.utils.ext
 
-import com.jlndev.githubservice.model.GitRepositoryResponse
+import com.jlndev.githubservice.model.GithubRepositoryResponse
 import com.jlndev.listaderepositriosgit.view.home.adapter.model.GitRepositoryItem
 
-fun GitRepositoryResponse.toGitRepositoryItem() : GitRepositoryItem {
+fun GithubRepositoryResponse.toGitRepositoryItem() : GitRepositoryItem {
     return GitRepositoryItem(
         id = this.id.toString(),
         repositoryName = repositoryName,

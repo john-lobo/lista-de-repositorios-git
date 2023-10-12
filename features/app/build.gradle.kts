@@ -51,12 +51,14 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation ("io.mockk:mockk:1.13.4")
-    testImplementation ("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("io.mockk:mockk:1.13.4")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+
+    androidTestImplementation("androidx.test.ext:junit:1.2.0-alpha01")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.0-alpha01")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.0-alpha01")
 
     //Glide
     implementation ("com.github.bumptech.glide:glide:4.15.0")

@@ -2,8 +2,8 @@ package com.jlndev.listaderepositriosgit.view.home
 
 import androidx.lifecycle.Observer
 import com.jlndev.baseservice.state.ResponseState
-import com.jlndev.githubservice.data.GithubRepository
-import com.jlndev.githubservice.model.GitHubSearchResponse
+import com.jlndev.githubservice.data.service.GithubRepository
+import com.jlndev.githubservice.model.GithubResponse
 import com.jlndev.listaderepositriosgit.BaseViewModelTest
 import io.mockk.every
 import io.mockk.mockk
@@ -16,10 +16,10 @@ class HomeViewModelTest : BaseViewModelTest() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var repository: GithubRepository
-    private lateinit var onRepositoryFirstPageObserver: Observer<ResponseState<GitHubSearchResponse>>
+    private lateinit var onRepositoryFirstPageObserver: Observer<ResponseState<GithubResponse>>
     private lateinit var onRepositoryPageLoadingObserver: Observer<Boolean>
 
-    val searchResponse = GitHubSearchResponse(false, emptyList(), 0)
+    private val githubResponse = GithubResponse(emptyList())
 
     override fun setup() {
         repository = mockk()
@@ -29,60 +29,60 @@ class HomeViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun testSearchRepositoriesSuccess() {
+    fun testSearchFirstRepositoriesSuccess() {
         // Arrange
-        every { repository.searchRepositories(1) } returns Single.just(searchResponse)
+        every { repository.searchFirstRepositories() } returns Single.just(githubResponse)
 
         // Act
         viewModel.loadFirstPageItems()
         testScheduler.test().advanceTimeBy(1, TimeUnit.SECONDS)
 
         // Assert
-        verify { repository.searchRepositories(1) }
-        verify { onRepositoryFirstPageObserver.onChanged(ResponseState.Success(searchResponse)) }
+        verify { repository.searchFirstRepositories() }
+        verify { onRepositoryFirstPageObserver.onChanged(ResponseState.Success(githubResponse)) }
     }
 
     @Test
     fun testSearchRepositoriesError() {
         // Arrange
         val error = Throwable("Erro na busca de repositórios")
-        every { repository.searchRepositories(1) } returns Single.error(error)
+        every { repository.searchFirstRepositories() } returns Single.error(error)
 
         // Act
         viewModel.loadFirstPageItems()
         testScheduler.test().advanceTimeBy(1, TimeUnit.SECONDS)
 
         // Assert
-        verify { repository.searchRepositories(1) }
+        verify { repository.searchFirstRepositories() }
         verify { onRepositoryFirstPageObserver.onChanged(ResponseState.Error(error)) }
     }
 
     @Test
-    fun testSearchRepositoriesMoreSuccess() {
+    fun testSearchMoreRepositoriesSuccess() {
         // Arrange
-        every { repository.searchRepositories(2) } returns Single.just(searchResponse)
+        every { repository.searchMoreRepositories() } returns Single.just(githubResponse)
 
         // Act
         viewModel.loadMoreItems()
         testScheduler.test().advanceTimeBy(1, TimeUnit.SECONDS)
 
         // Assert
-        verify { repository.searchRepositories(2) }
-        verify { onRepositoryFirstPageObserver.onChanged(ResponseState.Success(searchResponse)) }
+        verify { repository.searchMoreRepositories() }
+        verify { onRepositoryFirstPageObserver.onChanged(ResponseState.Success(githubResponse)) }
     }
 
     @Test
-    fun testSearchRepositoriesMoreError() {
+    fun testSearchMoreRepositoriesError() {
         // Arrange
         val error = Throwable("Erro na busca de repositórios")
-        every { repository.searchRepositories(2) } returns Single.error(error)
+        every { repository.searchMoreRepositories() } returns Single.error(error)
 
         // Act
         viewModel.loadMoreItems()
         testScheduler.test().advanceTimeBy(1, TimeUnit.SECONDS)
 
         // Assert
-        verify { repository.searchRepositories(2) }
+        verify { repository.searchMoreRepositories() }
         verify { onRepositoryFirstPageObserver.onChanged(ResponseState.Error(error)) }
     }
 

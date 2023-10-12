@@ -1,6 +1,6 @@
 package com.jlndev.listaderepositriosgit.view.home.adapter.model
 
-import com.jlndev.listaderepositriosgit.bases.BaseAdapter
+import com.jlndev.listaderepositriosgit.bases.adapter.BaseDiffItemView
 
 data class GitRepositoryItem(
     override val id: String,
@@ -10,7 +10,7 @@ data class GitRepositoryItem(
     val avatarUrl: String,
     val ownerName: String,
     val viewType: Int = 0,
-): BaseAdapter.BaseDiffItemView() {
+): BaseDiffItemView() {
     companion object {
         val LOADING = GitRepositoryItem("LOADING", "", 0, 0, "", "", 1)
     }

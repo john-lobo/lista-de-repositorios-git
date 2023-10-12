@@ -4,7 +4,7 @@ package com.jlndev.githubservice.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class License(
+data class LicenseResponse(
     @SerializedName("key")
     val key: String,
     @SerializedName("name")

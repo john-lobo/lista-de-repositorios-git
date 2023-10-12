@@ -1,59 +1,52 @@
 package com.jlndev.listaderepositriosgit.view.home.adapter
 
-import android.graphics.drawable.Drawable
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-import com.jlndev.listaderepositriosgit.bases.BaseAdapter
-import com.jlndev.listaderepositriosgit.bases.PaginationScrollListener
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.jlndev.listaderepositriosgit.R
+import com.jlndev.listaderepositriosgit.bases.adapter.BaseAdapter
+import com.jlndev.listaderepositriosgit.bases.adapter.BaseAdapterListener
+import com.jlndev.listaderepositriosgit.bases.adapter.BasePaginationScrollListener
+import com.jlndev.listaderepositriosgit.bases.adapter.BaseViewHolder
 import com.jlndev.listaderepositriosgit.databinding.ItemLoadingBinding
 import com.jlndev.listaderepositriosgit.databinding.ItemRepositoryBinding
-import com.jlndev.listaderepositriosgit.utils.ext.gone
 import com.jlndev.listaderepositriosgit.view.home.adapter.model.GitRepositoryItem
 
 class GitRepositoriesAdapter(
-    private val repositoriesAdapterListener: GitRepositoriesAdapterListener
-) : BaseAdapter<GitRepositoryItem, BaseAdapter.ViewHolder<GitRepositoryItem>, BaseAdapter.AdapterListener<GitRepositoryItem>>(repositoriesAdapterListener) {
+    private val repositoriesAdapterListener: GitRepositoriesAdapterListener,
+    private val context: Context
+) : BaseAdapter<GitRepositoryItem, BaseViewHolder<GitRepositoryItem>, BaseAdapterListener<GitRepositoryItem>>(repositoriesAdapterListener) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<GitRepositoryItem> {
-        when (viewType) {
-            VIEW_TYPE_REPOSITORY -> {
-                val itemBinding = ItemRepositoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return RepositoryItemViewHolder(itemBinding)
-            }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<GitRepositoryItem> {
+        return when (viewType) {
             VIEW_TYPE_LOADING -> {
                 val itemBinding = ItemLoadingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return RepositoryLoadingViewHolder(itemBinding)
+                RepositoryLoadingViewHolder(itemBinding)
             }
-            else -> throw IllegalArgumentException("Unknown viewType: $viewType")
+            else -> {
+                val itemBinding = ItemRepositoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                RepositoryItemViewHolder(itemBinding)
+            }
         }
     }
 
-    inner class RepositoryItemViewHolder(private val itemBinding: ItemRepositoryBinding) : ViewHolder<GitRepositoryItem>(itemBinding.root) {
-        override fun bind(repository: GitRepositoryItem) {
+    inner class RepositoryItemViewHolder(private val itemBinding: ItemRepositoryBinding) : BaseViewHolder<GitRepositoryItem>(itemBinding.root) {
+        override fun bind(item: GitRepositoryItem) {
             itemBinding.run {
-                itemRepositoryNameView.text = "Repositório: ${repository.repositoryName}"
-                itemOwnerNameView.text = "Autor: ${repository.ownerName}"
-                itemTitleStarView.text =   "Estrelas: ${repository.stargazersCount}"
-                itemTitleForkView.text =  "Forks: ${repository.forksCount}"
+                itemRepositoryNameView.text = "Repositório: ${item.repositoryName}"
+                itemOwnerNameView.text = "Autor: ${item.ownerName}"
+                itemTitleStarView.text = "Estrelas: ${item.stargazersCount}"
+                itemTitleForkView.text = "Forks: ${item.forksCount}"
+
                 Glide.with(itemView)
-                    .load(repository.avatarUrl)
+                    .load(item.avatarUrl)
+                    .placeholder(R.drawable.ic_placeholder)
                     .fitCenter()
-                    .listener(object : RequestListener<Drawable?> {
-                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable?>?, isFirstResource: Boolean): Boolean {
-                            loadingItemView.gone()
-                            return false
-                        }
-                        override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable?>?, dataSource: com.bumptech.glide.load.DataSource?, isFirstResource: Boolean): Boolean {
-                            loadingItemView.gone()
-                            return false
-                        }
-                    })
+                    .diskCacheStrategy(DiskCacheStrategy.DATA)
                     .into(itemImageview)
             }
         }
@@ -61,35 +54,39 @@ class GitRepositoriesAdapter(
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        recyclerView.addOnScrollListener(object : PaginationScrollListener(recyclerView.layoutManager as LinearLayoutManager) {
-            override fun loadMoreItems() {
-                showLoadingMoreItems()
-                repositoriesAdapterListener.loadMoreItems()
-            }
+            recyclerView.addOnScrollListener(object : BasePaginationScrollListener(recyclerView.layoutManager as LinearLayoutManager, context) {
+                override fun loadMoreItems() {
+                    showLoadingMoreItems()
+                    repositoriesAdapterListener.loadMoreItems()
+                }
 
-            override fun isLoading() = repositoriesAdapterListener.isLoading()
-        })
+                override fun isLoading() = repositoriesAdapterListener.isLoading()
+            })
     }
 
-    inner class RepositoryLoadingViewHolder(itemBinding: ItemLoadingBinding) : ViewHolder<GitRepositoryItem>(itemBinding.root) {
+    inner class RepositoryLoadingViewHolder(itemBinding: ItemLoadingBinding) : BaseViewHolder<GitRepositoryItem>(itemBinding.root) {
         override fun bind(item: GitRepositoryItem) {
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return items[position].viewType
+        return controller.getItems()[position].viewType
     }
 
     fun addMoreItems(gitRepositoryItems: List<GitRepositoryItem>) {
-        addAll(gitRepositoryItems)
-        removeItem(GitRepositoryItem.LOADING)
+        controller.addAll(gitRepositoryItems)
+        removeLoading()
+    }
+
+    fun removeLoading() {
+        controller.removeItem(GitRepositoryItem.LOADING)
     }
 
     private fun showLoadingMoreItems() {
-        addItem(GitRepositoryItem.LOADING)
+        controller.addItem(GitRepositoryItem.LOADING)
     }
 
-    interface GitRepositoriesAdapterListener : AdapterListener<GitRepositoryItem> {
+    interface GitRepositoriesAdapterListener : BaseAdapterListener<GitRepositoryItem> {
         fun loadMoreItems()
         fun isLoading(): Boolean
     }

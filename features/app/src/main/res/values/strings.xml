@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Lista de repositórios GIT</string>
-    <string name="home">home</string>
+    <string name="home">Home</string>
     <string name="starts">Estrelas:</string>
     <string name="forks">Forks:</string>
+    <string name="list_repositories">Lista de repositorios</string>
 </resources>

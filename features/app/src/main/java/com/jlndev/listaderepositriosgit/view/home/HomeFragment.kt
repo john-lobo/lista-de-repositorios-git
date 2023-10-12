@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.jlndev.baseservice.state.ResponseState
-import com.jlndev.listaderepositriosgit.bases.BaseFragment
+import com.jlndev.listaderepositriosgit.bases.fragment.BaseFragment
 import com.jlndev.listaderepositriosgit.databinding.FragmentHomeBinding
 import com.jlndev.listaderepositriosgit.utils.ext.gone
 import com.jlndev.listaderepositriosgit.utils.ext.showLoading
@@ -25,9 +25,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         viewModel.loadFirstPageItems()
     }
 
-    override fun onGetToolbar(): ToolbarConfig = ToolbarConfig("Home", false)
-
     override fun onGetViewBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentHomeBinding.inflate(inflater, container, false)
+
+    override fun onInitViews() {
+        gitRepositoriesAdapter = GitRepositoriesAdapter(object : GitRepositoriesAdapter.GitRepositoriesAdapterListener {
+            override fun onAdapterItemClicked(position: Int, item: GitRepositoryItem, view: View?) {
+                Toast.makeText(requireContext(), item.repositoryName, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun loadMoreItems() {
+                viewModel.loadMoreItems()
+            }
+
+            override fun isLoading() = isLoading
+        }, requireContext())
+
+        binding.recyclerGitRepositoriesView.adapter = gitRepositoriesAdapter
+    }
 
     override fun onInitViewModel() {
         viewModel.repositoryFirstPageLive.observe(viewLifecycleOwner) {
@@ -52,7 +66,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 }
 
                 is ResponseState.Error -> {
-                    binding.recyclerGitRepositoriesView.gone()
+                    gitRepositoriesAdapter.removeLoading()
                 }
             }
         }
@@ -64,21 +78,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         viewModel.repositoryMorePageLoading.observe(viewLifecycleOwner) {
             isLoading = it
         }
-    }
-
-    override fun onInitViews() {
-        gitRepositoriesAdapter = GitRepositoriesAdapter(object : GitRepositoriesAdapter.GitRepositoriesAdapterListener {
-            override fun onAdapterItemClicked(position: Int, item: GitRepositoryItem, view: View?) {
-                Toast.makeText(requireContext(), item.repositoryName, Toast.LENGTH_SHORT).show()
-            }
-
-            override fun loadMoreItems() {
-                viewModel.loadMoreItems()
-            }
-
-            override fun isLoading() = isLoading
-        })
-
-        binding.recyclerGitRepositoriesView.adapter = gitRepositoriesAdapter
     }
 }
