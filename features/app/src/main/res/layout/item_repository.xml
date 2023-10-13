@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/itemRepositoryView"
     android:layout_margin="@dimen/dimen_08dp"
     android:background="@drawable/background_item"
     android:foreground="?android:attr/selectableItemBackground"

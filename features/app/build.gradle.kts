@@ -38,6 +38,8 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    testOptions.animationsDisabled = true
 }
 
 dependencies {
@@ -53,15 +55,16 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
 
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("io.mockk:mockk:1.13.4")
-    testImplementation("androidx.arch.core:core-testing:2.2.0")
-
-    androidTestImplementation("androidx.test.ext:junit:1.2.0-alpha01")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.0-alpha01")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.0-alpha01")
-
     //Glide
     implementation ("com.github.bumptech.glide:glide:4.15.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.0")
+
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("io.mockk:mockk:1.13.4")
+
+    androidTestImplementation("androidx.test:core:1.0.0")
+    androidTestImplementation("androidx.test:runner:1.1.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.1.0")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.1.0")
 }
