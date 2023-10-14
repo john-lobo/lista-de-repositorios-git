@@ -1,5 +1,5 @@
 package com.jlndev.listaderepositriosgit.view.details
 
-import com.jlndev.listaderepositriosgit.bases.viewModel.BaseViewModel
+import com.jlndev.coreandroid.bases.viewModel.BaseViewModel
 
 class DetailsViewModel : BaseViewModel()

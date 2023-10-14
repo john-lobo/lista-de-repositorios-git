@@ -1,7 +1,7 @@
 package com.jlndev.listaderepositriosgit.view.home.adapter.model
 
 import android.os.Parcelable
-import com.jlndev.listaderepositriosgit.bases.adapter.BaseDiffItemView
+import com.jlndev.coreandroid.bases.adapter.BaseDiffItemView
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

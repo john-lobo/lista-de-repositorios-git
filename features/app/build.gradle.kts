@@ -43,6 +43,7 @@ android {
 dependencies {
     implementation(project(":data:baseservice"))
     implementation(project(":data:githubservice"))
+    implementation(project(":features:coreandroid"))
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -60,8 +61,4 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.2.0-alpha01")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.0-alpha01")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.0-alpha01")
-
-    //Glide
-    implementation ("com.github.bumptech.glide:glide:4.15.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.0")
 }
