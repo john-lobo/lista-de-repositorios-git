@@ -17,3 +17,4 @@ rootProject.name = "Lista de repositórios GIT"
 include(":features:app")
 include(":data:baseservice")
 include(":data:githubservice")
+include(":features:coreandroid")

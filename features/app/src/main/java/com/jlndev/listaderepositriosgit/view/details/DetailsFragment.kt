@@ -3,11 +3,11 @@ package com.jlndev.listaderepositriosgit.view.details
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jlndev.listaderepositriosgit.R
-import com.jlndev.listaderepositriosgit.bases.fragment.BaseBottomSheetFragment
+import com.jlndev.coreandroid.bases.fragment.BaseBottomSheetFragment
 import com.jlndev.listaderepositriosgit.databinding.FragmentDetailsBinding
-import com.jlndev.listaderepositriosgit.utils.ext.getTypedParcelable
-import com.jlndev.listaderepositriosgit.utils.ext.loadImage
-import com.jlndev.listaderepositriosgit.utils.ext.setBoldSubstring
+import com.jlndev.coreandroid.ext.getTypedParcelable
+import com.jlndev.coreandroid.ext.loadImage
+import com.jlndev.coreandroid.ext.setBoldSubstring
 import com.jlndev.listaderepositriosgit.view.home.HomeFragment.Companion.KEY_GIT_REPOSITORY_ITEM
 import com.jlndev.listaderepositriosgit.view.home.adapter.model.GitRepositoryItem
 import org.koin.androidx.viewmodel.ext.android.viewModel

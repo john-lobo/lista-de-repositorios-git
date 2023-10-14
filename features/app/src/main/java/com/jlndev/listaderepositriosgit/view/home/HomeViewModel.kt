@@ -8,7 +8,7 @@ import com.jlndev.baseservice.ext.processSingle
 import com.jlndev.baseservice.state.ResponseState
 import com.jlndev.githubservice.data.api.model.GithubResponse
 import com.jlndev.githubservice.data.service.GithubRepository
-import com.jlndev.listaderepositriosgit.bases.viewModel.BaseViewModel
+import com.jlndev.coreandroid.bases.viewModel.BaseViewModel
 
 class HomeViewModel(
     private val schedulerProvider: BaseSchedulerProvider,

@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jlndev.listaderepositriosgit.R
-import com.jlndev.listaderepositriosgit.bases.adapter.BaseAdapterController
-import com.jlndev.listaderepositriosgit.bases.adapter.BaseAdapterListener
-import com.jlndev.listaderepositriosgit.bases.adapter.BasePaginationScrollListener
-import com.jlndev.listaderepositriosgit.bases.adapter.BaseViewHolder
+import com.jlndev.coreandroid.bases.adapter.BaseAdapterController
+import com.jlndev.coreandroid.bases.adapter.BaseAdapterListener
+import com.jlndev.coreandroid.bases.adapter.BasePaginationScrollListener
+import com.jlndev.coreandroid.bases.adapter.BaseViewHolder
 import com.jlndev.listaderepositriosgit.databinding.ItemLoadingBinding
 import com.jlndev.listaderepositriosgit.databinding.ItemRepositoryBinding
-import com.jlndev.listaderepositriosgit.utils.ext.loadImage
-import com.jlndev.listaderepositriosgit.utils.ext.setBoldSubstring
+import com.jlndev.coreandroid.ext.loadImage
+import com.jlndev.coreandroid.ext.setBoldSubstring
 import com.jlndev.listaderepositriosgit.view.home.adapter.model.GitRepositoryItem
 
 class GitRepositoriesAdapter(
