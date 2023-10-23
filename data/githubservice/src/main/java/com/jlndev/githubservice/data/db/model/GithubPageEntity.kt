@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "githubPage")
-data class GithubPageEntity(
+class GithubPageEntity(
     @PrimaryKey
     val id: Int = 1,
     val page: Int?

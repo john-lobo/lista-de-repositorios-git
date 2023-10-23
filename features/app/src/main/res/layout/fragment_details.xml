@@ -1,189 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen_08dp"
+    android:background="@drawable/background_item"
     android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:padding="@dimen/dimen_12dp"
     android:paddingHorizontal="@dimen/dimen_12dp"
-    android:padding="@dimen/dimen_12dp">
+    android:paddingTop="@dimen/dimen_12dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
+        android:id="@+id/itemImageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:importantForAccessibility="no"
+        android:scaleType="center"
+        tools:srcCompat="@drawable/ic_placeholder" />
+
+    <TextView
+        android:id="@+id/itemOwnerNameView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/dimen_12dp"
-        android:paddingTop="@dimen/dimen_12dp"
-        android:paddingBottom="@dimen/dimen_120dp"
-        android:background="@drawable/background_item"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.12">
+        android:layout_marginTop="@dimen/dimen_32dp"
+        android:background="@color/white"
+        android:ellipsize="end"
+        android:textAlignment="textStart"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        tools:text="John Lobo" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/itemCardImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen_120dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/dimen_60dp"
-            app:cardElevation="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/itemOwnerNameView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed">
+    <TextView
+        android:id="@+id/itemRepositoryNameView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_08dp"
+        android:background="@color/white"
+        android:textAlignment="textStart"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        tools:text="Respositorio" />
 
-            <ImageView
-                android:id="@+id/itemImageview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:importantForAccessibility="no"
-                android:scaleType="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_placeholder" />
+    <TextView
+        android:id="@+id/itemTitleStarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_08dp"
+        android:background="@color/white"
+        android:textAlignment="textStart"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        tools:text="ESTRELAS" />
 
-        </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/itemTitleForkView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_08dp"
+        android:background="@color/white"
+        android:textAlignment="textStart"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        tools:text="FORKS" />
 
-        <TextView
-            android:id="@+id/itemOwnerNameView"
-            android:layout_width="@dimen/match_constraints"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_32dp"
-            android:background="@color/white"
-            android:ellipsize="end"
-            android:textAlignment="textStart"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/itemRepositoryNameView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemCardImageView"
-            tools:text="John Lobo" />
+    <TextView
+        android:id="@+id/itemLanguageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_08dp"
+        android:background="@color/white"
+        android:ellipsize="end"
+        android:textAlignment="textStart"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        tools:text="Linguagem" />
 
-        <TextView
-            android:id="@+id/itemRepositoryNameView"
-            android:layout_width="@dimen/match_constraints"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_08dp"
-            android:background="@color/white"
-            android:textAlignment="textStart"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/itemTitleStarView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemOwnerNameView"
-            tools:text="Respositorio" />
+    <TextView
+        android:id="@+id/itemVisibilityView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_08dp"
+        android:background="@color/white"
+        android:textAlignment="textStart"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        tools:text="Visibilidade" />
 
-        <TextView
-            android:id="@+id/itemTitleStarView"
-            android:layout_width="@dimen/match_constraints"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_08dp"
-            android:background="@color/white"
-            android:textAlignment="textStart"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/itemTitleForkView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemRepositoryNameView"
-            tools:text="ESTRELAS" />
+    <TextView
+        android:id="@+id/itemTitleDescriptionView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_32dp"
+        android:background="@color/white"
+        android:text="@string/description"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/itemTitleForkView"
-            android:layout_width="@dimen/match_constraints"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_08dp"
-            android:background="@color/white"
-            android:textAlignment="textStart"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/itemLanguageView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemTitleStarView"
-            tools:text="FORKS" />
+    <TextView
+        android:id="@+id/itemDescriptionView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_08dp"
+        android:background="@color/white"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        tools:text="Descrição" />
 
-        <TextView
-            android:id="@+id/itemLanguageView"
-            android:layout_width="@dimen/match_constraints"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_08dp"
-            android:background="@color/white"
-            android:ellipsize="end"
-            android:textAlignment="textStart"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/itemVisibilityView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemTitleForkView"
-            tools:text="Linguagem" />
-
-        <TextView
-            android:id="@+id/itemVisibilityView"
-            android:layout_width="@dimen/match_constraints"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_08dp"
-            android:background="@color/white"
-            android:textAlignment="textStart"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/itemTitleDescriptionView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemLanguageView"
-            tools:text="Visibilidade" />
-
-        <TextView
-            android:id="@+id/itemTitleDescriptionView"
-            android:layout_width="@dimen/match_constraints"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_32dp"
-            android:background="@color/white"
-            android:text="Descrição"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/itemDescriptionView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemVisibilityView" />
-
-        <TextView
-            android:id="@+id/itemDescriptionView"
-            android:layout_width="@dimen/match_constraints"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_08dp"
-            android:background="@color/white"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/itemTitleDescriptionView"
-            tools:text="Descrição" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

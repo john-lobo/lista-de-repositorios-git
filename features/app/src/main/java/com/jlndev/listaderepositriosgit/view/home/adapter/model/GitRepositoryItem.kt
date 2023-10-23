@@ -5,7 +5,7 @@ import com.jlndev.coreandroid.bases.adapter.BaseDiffItemView
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class GitRepositoryItem(
+class GitRepositoryItem(
     override val id: String,
     val repositoryName: String,
     val stargazersCount: Int,

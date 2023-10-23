@@ -23,10 +23,12 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
+            buildConfigField("String", "DATABASE_NAME", "\"db_github_database\"")
         }
 
         debug {
             buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
+            buildConfigField("String", "DATABASE_NAME", "\"db_github_database_debug\"")
         }
 
         buildFeatures {
@@ -45,16 +47,9 @@ android {
 dependencies {
     implementation(project(":data:baseservice"))
 
-    implementation("androidx.room:room-rxjava2:2.5.2")
-    implementation("androidx.room:room-ktx:2.5.2")
-    implementation("androidx.room:room-runtime:2.5.2")
-    implementation("androidx.room:room-testing:2.5.2")
-    implementation("androidx.test:core-ktx:1.5.0")
-    implementation("androidx.test.ext:junit-ktx:1.1.5")
-    implementation("androidx.test:runner:1.5.2")
-    kapt("androidx.room:room-compiler:2.5.2")
-
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // room
+    val roomVersion = "2.6.0"
+    implementation("androidx.room:room-rxjava2:$roomVersion")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 }

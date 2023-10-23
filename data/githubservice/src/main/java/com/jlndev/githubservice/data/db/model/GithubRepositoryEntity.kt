@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "githubRepository")
-data class GithubRepositoryEntity(
+class GithubRepositoryEntity(
     @PrimaryKey val id: Int,
     val repositoryName: String,
     val stargazersCount: Int,

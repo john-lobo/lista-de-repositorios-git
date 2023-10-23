@@ -4,7 +4,7 @@ package com.jlndev.githubservice.data.api.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class GithubRepositoryResponse(
+class GithubRepositoryResponse(
     @SerializedName("id")
     val id: Int,
     @SerializedName("name")

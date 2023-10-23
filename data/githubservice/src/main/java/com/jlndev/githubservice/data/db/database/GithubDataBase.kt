@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.jlndev.githubservice.BuildConfig
 import com.jlndev.githubservice.data.db.dao.GithubPageDao
 import com.jlndev.githubservice.data.db.dao.GithubRepositoryDao
-
 import com.jlndev.githubservice.data.db.model.GithubPageEntity
 import com.jlndev.githubservice.data.db.model.GithubRepositoryEntity
 
@@ -19,14 +19,13 @@ abstract class GithubDataBase: RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: GithubDataBase? = null
-        private const val DATABASE_NAME = "db_github_database"
 
         fun getInstance(context: Context): GithubDataBase {
             return INSTANCE ?: synchronized(this){
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     GithubDataBase::class.java,
-                    DATABASE_NAME
+                    BuildConfig.DATABASE_NAME
                 )
                     .fallbackToDestructiveMigration()
                     .build()
