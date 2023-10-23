@@ -14,9 +14,7 @@ abstract class BasePaginationScrollListener(
         val totalItemCount: Int = layoutManager.itemCount
         val firstVisibleItemPosition: Int = layoutManager.findFirstVisibleItemPosition()
         if (!isLoading()) {
-            if (visibleItemCount + firstVisibleItemPosition >= totalItemCount - 3
-                && firstVisibleItemPosition >= 0
-            ) {
+            if (visibleItemCount + firstVisibleItemPosition >= totalItemCount - 3 && firstVisibleItemPosition >= 0) {
                 loadMoreItems()
             }
         }

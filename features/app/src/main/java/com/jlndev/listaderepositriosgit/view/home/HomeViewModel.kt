@@ -27,62 +27,52 @@ class HomeViewModel(
     val updateRepositoryLive : LiveData<ResponseState<GithubResponse>>
         get() = _updateRepositoryLive
 
-    private val _repositoryFirstPageLoading = MutableLiveData<Boolean>()
-    val repositoryFirstPageLoading: LiveData<Boolean>
-        get() = _repositoryFirstPageLoading
-
-    private val _repositoryMorePageLoading = MutableLiveData<Boolean>()
-    val repositoryMorePageLoading: LiveData<Boolean>
-        get() = _repositoryMorePageLoading
-
-    private val _updateRepositoryLoadingLive = MutableLiveData<Boolean>()
-    val updateRepositoryLoadingLive: LiveData<Boolean>
-        get() = _updateRepositoryLoadingLive
-
-
     internal fun loadFirstPageItems() {
-        _repositoryFirstPageLoading.value = true
-
         repository.searchFirstRepositories()
             .processSingle(schedulerProvider)
-            .doFinally { _repositoryFirstPageLoading.value = false }
+            .doOnSubscribe{
+                _repositoryFirstPageLive.value = ResponseState.Loading(true)
+            }
             .doOnSuccess {
+                _repositoryFirstPageLive.value = ResponseState.Loading(false)
                 _repositoryFirstPageLive.value = ResponseState.Success(it)
             }
             .doOnError {
+                _repositoryFirstPageLive.value = ResponseState.Loading(false)
                 _repositoryFirstPageLive.value = ResponseState.Error(it)
             }
             .disposedBy(disposables)
     }
 
     fun loadMoreItems() {
-        _repositoryMorePageLoading.value = true
-
         repository.searchMoreRepositories()
             .processSingle(schedulerProvider)
-            .doFinally { _repositoryMorePageLoading.value = false }
+            .doOnSubscribe{
+                _repositoryMorePageLive.value = ResponseState.Loading(true)
+            }
             .doOnSuccess {
+                _repositoryMorePageLive.value = ResponseState.Loading(false)
                 _repositoryMorePageLive.value = ResponseState.Success(it)
             }
             .doOnError {
+                _repositoryMorePageLive.value = ResponseState.Loading(false)
                 _repositoryMorePageLive.value = ResponseState.Error(it)
             }
             .disposedBy(disposables)
     }
 
     fun clearAndSearchFirstRepositories() {
-        _updateRepositoryLoadingLive.value = true
-
         repository.clearAndSearchFirstRepositories()
             .processSingle(schedulerProvider)
-            .doFinally { _updateRepositoryLoadingLive.value = false }
+            .doOnSubscribe { _updateRepositoryLive.value = ResponseState.Loading(true) }
             .doOnSuccess {
+                _updateRepositoryLive.value = ResponseState.Loading(false)
                 _updateRepositoryLive.value = ResponseState.Success(it)
             }
             .doOnError {
+                _updateRepositoryLive.value = ResponseState.Loading(false)
                 _updateRepositoryLive.value = ResponseState.Error(it)
             }
             .disposedBy(disposables)
     }
-
 }

@@ -61,65 +61,60 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun onInitViewModel() {
-        viewModel.repositoryFirstPageLive.observe(viewLifecycleOwner) {
-            when(it) {
-                is ResponseState.Success -> {
-                    binding.recyclerGitRepositoriesView.visible()
-                    val gitRepositoryItems = it.data.items.map { it.toGitRepositoryItem() }
-                        .sortedByDescending { it.stargazersCount }
-                    gitRepositoriesAdapter.submitList(gitRepositoryItems)
-                }
-
-                is ResponseState.Error -> {
-                    showErrorView()
-                }
-            }
-        }
-
-        viewModel.repositoryMorePageLive.observe(viewLifecycleOwner) {
-            when(it) {
-                is ResponseState.Success -> {
-                    val gitRepositoryItems = it.data.items.map { it.toGitRepositoryItem() }
-                        .sortedByDescending { it.stargazersCount }
-                    gitRepositoriesAdapter.addMoreItems(gitRepositoryItems)
-                }
-
-                is ResponseState.Error -> {
-                    gitRepositoriesAdapter.removeLoading()
+        viewModel.apply {
+            repositoryFirstPageLive.observe(viewLifecycleOwner) {
+                when(it) {
+                    is ResponseState.Success -> {
+                        binding.recyclerGitRepositoriesView.visible()
+                        val gitRepositoryItems = it.data.items.map { it.toGitRepositoryItem() }
+                            .sortedByDescending { it.stargazersCount }
+                        gitRepositoriesAdapter.submitList(gitRepositoryItems)
+                    }
+                    is ResponseState.Loading -> {
+                        if(it.isLoading) {
+                            binding.recyclerGitRepositoriesView.gone()
+                            binding.errorView.root.gone()
+                        }
+                        binding.loadingView.showLoading(it.isLoading)
+                    }
+                    is ResponseState.Error -> {
+                        showErrorView()
+                    }
                 }
             }
-        }
-
-        viewModel.updateRepositoryLive.observe(viewLifecycleOwner) {
-            when(it) {
-                is ResponseState.Success -> {
-                    gitRepositoriesAdapter.clear()
-                    val gitRepositoryItems = it.data.items.map { it.toGitRepositoryItem() }
-                        .sortedByDescending { it.stargazersCount }
-                    gitRepositoriesAdapter.submitList(gitRepositoryItems)
-                    binding.recyclerGitRepositoriesView.visible()
-                }
-
-                is ResponseState.Error -> {
-                    showErrorView()
+            repositoryMorePageLive.observe(viewLifecycleOwner) {
+                when(it) {
+                    is ResponseState.Success -> {
+                        val gitRepositoryItems = it.data.items.map { it.toGitRepositoryItem() }
+                            .sortedByDescending { it.stargazersCount }
+                        gitRepositoriesAdapter.addMoreItems(gitRepositoryItems)
+                    }
+                    is ResponseState.Loading -> {
+                        isLoading = it.isLoading
+                    }
+                    is ResponseState.Error -> {
+                        gitRepositoriesAdapter.removeLoading()
+                    }
                 }
             }
-        }
 
-        viewModel.repositoryFirstPageLoading.observe(viewLifecycleOwner) {
-            if(it) {
-                binding.recyclerGitRepositoriesView.gone()
-                binding.errorView.root.gone()
+            updateRepositoryLive.observe(viewLifecycleOwner) {
+                when(it) {
+                    is ResponseState.Success -> {
+                        gitRepositoriesAdapter.clear()
+                        val gitRepositoryItems = it.data.items.map { it.toGitRepositoryItem() }
+                            .sortedByDescending { it.stargazersCount }
+                        gitRepositoriesAdapter.submitList(gitRepositoryItems)
+                        binding.recyclerGitRepositoriesView.visible()
+                    }
+                    is ResponseState.Loading -> {
+                        binding.swipeRefreshView.isRefreshing = it.isLoading
+                    }
+                    is ResponseState.Error -> {
+                        showErrorView()
+                    }
+                }
             }
-            binding.loadingView.showLoading(it)
-        }
-
-        viewModel.repositoryMorePageLoading.observe(viewLifecycleOwner) {
-            isLoading = it
-        }
-
-        viewModel.updateRepositoryLoadingLive.observe(viewLifecycleOwner) {
-            binding.swipeRefreshView.isRefreshing = it
         }
     }
 
