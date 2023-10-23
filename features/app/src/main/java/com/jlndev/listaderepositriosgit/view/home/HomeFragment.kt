@@ -15,6 +15,7 @@ import com.jlndev.listaderepositriosgit.R
 import com.jlndev.listaderepositriosgit.databinding.FragmentHomeBinding
 import com.jlndev.listaderepositriosgit.view.ext.toGitRepositoryItem
 import com.jlndev.listaderepositriosgit.view.home.adapter.GitRepositoriesAdapter
+import com.jlndev.listaderepositriosgit.view.home.adapter.GitRepositoriesAdapterListener
 import com.jlndev.listaderepositriosgit.view.home.adapter.model.GitRepositoryItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -35,7 +36,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     override fun onGetViewBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentHomeBinding.inflate(inflater, container, false)
 
     override fun onInitViews() {
-        gitRepositoriesAdapter = GitRepositoriesAdapter(object : GitRepositoriesAdapter.GitRepositoriesAdapterListener {
+        gitRepositoriesAdapter = GitRepositoriesAdapter(object : GitRepositoriesAdapterListener {
             override fun onAdapterItemClicked(position: Int, item: GitRepositoryItem, view: View?) {
                 findNavController().navigate(R.id.action_home_to_details, bundleOf(KEY_GIT_REPOSITORY_ITEM to item))
             }
@@ -45,7 +46,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             }
 
             override fun isLoading() = isLoading
-        }, requireContext())
+        })
 
         binding.recyclerGitRepositoriesView.adapter = gitRepositoriesAdapter
 
